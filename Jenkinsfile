@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_CREDS = credentials('docker-hub-credentials')
-        DOCKER_IMAGE = "your-dockerhub-username/python-k8s-app"
+        DOCKER_IMAGE = "mrperfect9/python-k8s-app"
         IMAGE_TAG = "${env.BUILD_NUMBER}"
     }
 
