@@ -1,8 +1,8 @@
-# Automated CI/CD Pipeline for Kubernetes 🚀
+# Automated CI/CD Pipeline for Kubernetes
 
 This repository contains a complete, end-to-end automated Continuous Integration and Continuous Deployment (CI/CD) pipeline powered by Jenkins for a containerized Python Flask web application deployed to a local Kubernetes (Minikube) cluster.
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 1.  **Application Code (`app.py`)**: A lightweight Python Flask application serving a simple web page.
 2.  **Containerization (`Dockerfile`)**: Packages the Python application into a lightweight Docker image using `python:3.12-slim`.
@@ -13,7 +13,7 @@ This repository contains a complete, end-to-end automated Continuous Integration
     *   **Push**: Authenticates and pushes the image to Docker Hub.
     *   **Deploy**: Updates the Kubernetes deployment to pull the latest image.
 
-## 🧠 Key DevOps Concepts Implemented
+## Key DevOps Concepts Implemented
 
 ### 1. Docker-outside-of-Docker (DooD)
 Because Jenkins itself is running inside a Docker container, it cannot build Docker images by default. We bypassed this by mounting the host machine's Docker socket (`/var/run/docker.sock`) into the Jenkins container. This allows the Jenkins container to command the host's Docker Engine to build and push images.
@@ -27,7 +27,7 @@ The `.yaml` files never physically move to the Minikube cluster. Instead, `kubec
 ### 4. Zero-Downtime Rolling Updates
 The Kubernetes `deployment.yaml` is configured with `imagePullPolicy: Always`. When Jenkins triggers an update, Kubernetes provisions the new pods and downloads the new image from Docker Hub. **Traffic continues to route to the old pods until the new pods are 100% healthy**, ensuring users never experience downtime during deployments.
 
-## 🛠️ Local Setup Guide
+## Local Setup Guide
 
 ### 1. The Custom Jenkins Container
 To give Jenkins the necessary tools (`docker` and `kubectl`), we utilize a custom `Jenkins.Dockerfile`:
@@ -63,7 +63,7 @@ minikube start
 sudo docker network connect minikube jenkins
 ```
 
-## 🔄 How to Trigger the Pipeline
+## How to Trigger the Pipeline
 1. Make a change to `app.py`.
 2. Commit and push the code to the `main` branch.
 3. Jenkins (configured with SCM Polling `* * * * *`) detects the push within 60 seconds and automatically begins the build.
